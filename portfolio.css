@@ -1,0 +1,773 @@
+/* =========================================================
+   Ashish Patel | Portfolio stylesheet
+   1. Variables   2. Base   3. Layout   4. Navbar   5. Hero
+   6. Sections    7. Cards  8. Buttons  9. Footer
+   10. Animation  11. Responsive
+   ========================================================= */
+
+/* ---------- 1. VARIABLES (edit colors and spacing here) ---------- */
+:root {
+  /* Colors */
+  --bg: #06030d;            /* page background */
+  --bg-alt: #0a0615;        /* alternating sections */
+  --surface: #110a22;       /* cards */
+  --border: #241a45;
+  --text: #f4f1ff;          /* main text (high contrast) */
+  --text-muted: #b6add9;    /* secondary text */
+  --accent: #a78bfa;        /* violet */
+  --accent-2: #60a5fa;      /* blue */
+  --pink: #f472b6;          /* pink */
+  --accent-soft: rgba(167, 139, 250, 0.14);
+
+  /* Fonts */
+  --font-heading: "Sora", "Segoe UI", system-ui, sans-serif;
+  --font-body: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+
+  /* Spacing and shape */
+  --space-sm: 0.75rem;
+  --space-md: 1.5rem;
+  --space-lg: 3rem;
+  --space-xl: 6rem;
+  --radius: 14px;
+  --radius-pill: 999px;
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+  --transition: 0.25s ease;
+}
+
+/* ---------- 2. BASE ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;   /* smooth scrolling for anchor links */
+  scroll-padding-top: 5rem;  /* keeps headings clear of the sticky navbar */
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: var(--text);
+  background: var(--bg);
+}
+
+h1, h2, h3 {
+  font-family: var(--font-heading);
+  line-height: 1.2;
+  margin: 0 0 var(--space-sm);
+}
+
+h2 { font-size: clamp(1.8rem, 4vw, 2.5rem); margin-bottom: var(--space-md); }
+h3 { font-size: 1.2rem; }
+p  { margin: 0 0 var(--space-sm); color: var(--text-muted); max-width: 65ch; }
+ul { list-style: none; margin: 0; padding: 0; }
+a  { color: var(--accent-2); }
+code { background: var(--surface); padding: 0.1em 0.4em; border-radius: 6px; font-size: 0.9em; }
+
+/* Visible focus for keyboard users */
+a:focus-visible {
+  outline: 3px solid var(--accent-2);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* Skip link: appears only when focused with keyboard */
+.skip-link {
+  position: absolute;
+  left: 1rem; top: -4rem;
+  background: var(--accent); color: #06030d;
+  padding: 0.6rem 1rem; border-radius: 8px;
+  font-weight: 600; z-index: 200;
+}
+.skip-link:focus { top: 1rem; }
+
+/* ---------- 3. LAYOUT ---------- */
+.container {
+  width: min(1100px, 100% - 2.5rem);
+  margin-inline: auto;
+}
+
+.section { padding-block: var(--space-xl); }
+.section-alt { background: var(--bg-alt); }
+.section-intro { margin-bottom: var(--space-lg); }
+
+/* ---------- 4. NAVBAR ---------- */
+.site-header {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(6, 3, 13, 0.85);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+  padding-block: 0.9rem;
+}
+
+.logo {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  color: var(--text);
+  text-decoration: none;
+}
+
+.nav-links { display: flex; gap: 0.25rem; }
+
+.nav-links a {
+  display: block;
+  padding: 0.4rem 0.9rem;
+  color: var(--text-muted);
+  text-decoration: none;
+  font-weight: 500;
+  border-radius: var(--radius-pill);
+  transition: color var(--transition), background var(--transition);
+}
+.nav-links a:hover { color: var(--text); background: var(--accent-soft); }
+
+/* ---------- 5. HERO ---------- */
+.hero {
+  position: relative;
+  overflow: hidden;
+  min-height: 88vh;
+  display: flex;
+  align-items: center;
+  padding-block: var(--space-xl);
+}
+
+/* Soft glowing orbs behind the text */
+.hero-glow {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(circle at 80% 20%, rgba(124, 58, 237, 0.24), transparent 45%),
+    radial-gradient(circle at 15% 85%, rgba(59, 130, 246, 0.16), transparent 45%),
+    radial-gradient(circle at 50% 60%, rgba(244, 114, 182, 0.11), transparent 40%);
+  animation: glow-drift 14s ease-in-out infinite alternate;
+}
+
+.hero-inner { position: relative; }
+
+.hero-hello {
+  color: var(--accent);
+  font-weight: 600;
+  margin-bottom: var(--space-sm);
+}
+
+.hero h1 {
+  font-size: clamp(2.6rem, 8vw, 5.5rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  /* White-to-lavender gradient on the whole heading */
+  background: linear-gradient(120deg, #ffffff 25%, #c4b5fd 60%, #f9a8d4 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.hero-subtitle {
+  font-family: var(--font-heading);
+  font-size: clamp(1.05rem, 2.5vw, 1.45rem);
+  color: var(--text);
+  margin-bottom: var(--space-md);
+}
+
+.hero-intro { font-size: 1.15rem; margin-bottom: var(--space-lg); }
+
+.hero-buttons { display: flex; flex-wrap: wrap; gap: var(--space-sm); }
+
+/* Page-load entrance: the hero content rises in, one line after another */
+.hero-text > * { animation: rise 0.8s ease both; }
+.hero-text > :nth-child(2) { animation-delay: 0.1s; }
+.hero-text > :nth-child(3) { animation-delay: 0.2s; }
+.hero-text > :nth-child(4) { animation-delay: 0.3s; }
+.hero-text > :nth-child(5) { animation-delay: 0.4s; }
+
+/* ---------- 6. SECTIONS ---------- */
+/* About */
+.about-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: var(--space-lg);
+  align-items: start;
+}
+
+.about-facts dl { margin: 0; }
+.about-facts dt { color: var(--accent); font-weight: 600; margin-top: var(--space-sm); }
+.about-facts dd { margin: 0; color: var(--text-muted); }
+
+/* Skills */
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: var(--space-md);
+}
+.skill { display: flex; flex-direction: column; gap: var(--space-sm); align-items: flex-start; }
+.skill h3 { margin: 0; }
+
+/* Skill level badges: different shape and text, not just color */
+.badge {
+  display: inline-block;
+  padding: 0.2rem 0.8rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border-radius: var(--radius-pill);
+}
+.badge-beginner { background: var(--accent); color: #06030d; }               /* filled */
+.badge-learning { border: 1.5px dashed var(--accent-2); color: var(--accent-2); } /* dashed outline */
+
+/* Projects */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--space-md);
+}
+.project { display: flex; flex-direction: column; }
+.project p { flex-grow: 1; }
+
+.tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-block: var(--space-sm); }
+.tags li {
+  font-size: 0.85rem;
+  padding: 0.15rem 0.7rem;
+  background: var(--accent-soft);
+  color: #d8d0ff;
+  border-radius: var(--radius-pill);
+}
+
+.project-links { display: flex; gap: var(--space-md); }
+.project-links a { font-weight: 600; text-decoration: none; }
+.project-links a:hover { text-decoration: underline; }
+
+/* Education */
+.education {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--space-md);
+}
+.edu-school { color: var(--accent-2); font-weight: 600; }
+
+/* Contact */
+.contact { text-align: center; }
+.contact .section-intro { margin-inline: auto; }
+.contact-list {
+  display: flex; flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-sm);
+}
+
+/* ---------- 7. CARDS ---------- */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: var(--space-md);
+  box-shadow: var(--shadow);
+  transition: transform var(--transition), border-color var(--transition);
+}
+.card:hover {
+  transform: translateY(-4px);
+  border-color: var(--accent);
+}
+
+/* ---------- 8. BUTTONS ---------- */
+.btn {
+  display: inline-block;
+  padding: 0.8rem 1.6rem;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: var(--radius-pill);
+  border: 2px solid transparent;
+  transition: transform var(--transition), box-shadow var(--transition), background var(--transition);
+}
+.btn:hover { transform: translateY(-2px); }
+
+.btn-primary {
+  background: linear-gradient(120deg, var(--accent), var(--pink));
+  color: #06030d;
+}
+.btn-primary:hover { box-shadow: 0 8px 24px rgba(244, 114, 182, 0.45); }
+
+.btn-outline { color: var(--text); border-color: var(--border); }
+.btn-outline:hover { border-color: var(--accent); background: var(--accent-soft); }
+
+/* ---------- 9. FOOTER ---------- */
+.site-footer {
+  padding-block: var(--space-md);
+  text-align: center;
+  border-top: 1px solid var(--border);
+}
+.site-footer p { margin: 0 auto; font-size: 0.95rem; }
+
+/* ---------- 10. ANIMATIONS ---------- */
+@keyframes rise {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes glow-drift {
+  from { transform: translate(-2%, -2%) scale(1); }
+  to   { transform: translate(2%, 2%) scale(1.08); }
+}
+
+/* Respect people who prefer less motion */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+
+/* ---------- 11. RESPONSIVE ---------- */
+/* Tablets */
+@media (max-width: 900px) {
+  .about-grid { grid-template-columns: 1fr; }
+  .section { padding-block: 4.5rem; }
+}
+
+/* Phones */
+@media (max-width: 640px) {
+  .navbar { flex-direction: column; gap: 0.4rem; }
+  .nav-links { flex-wrap: wrap; justify-content: center; }
+  .nav-links a { padding: 0.35rem 0.7rem; font-size: 0.95rem; }
+
+  .hero { min-height: auto; padding-block: 4rem; }
+  .education { flex-direction: column; }
+  .hero-buttons .btn, .contact-list .btn { width: 100%; text-align: center; }
+  .contact-list { flex-direction: column; }
+  .contact-list li { width: 100%; }
+}
+
+/* Safe areas for phones with notches */
+:root { padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
+.site-header { top: env(safe-area-inset-top, 0px); }
+
+/* =========================================================
+   12. EXTRA ANIMATIONS (pure CSS)
+   ========================================================= */
+
+/* Typing effect + blinking caret on the greeting */
+.hero-hello {
+  display: block;
+  width: 13ch;
+  max-width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: 2px solid var(--accent);
+  animation:
+    typing 1.4s steps(13) 0.3s both,
+    caret 0.8s step-end 0.3s 5 forwards;
+}
+@keyframes typing { from { width: 0; } to { width: 13ch; } }
+@keyframes caret  { 50% { border-color: transparent; } 100% { border-color: transparent; } }
+
+/* Headline: rises in, then its gradient keeps flowing */
+.hero h1 {
+  background-image: linear-gradient(120deg, #ffffff, #c4b5fd, #f9a8d4, #93c5fd, #c4b5fd, #ffffff);
+  background-size: 200% 100%;
+  animation:
+    rise 0.8s ease 0.1s both,
+    gradient-flow 8s linear 1s infinite;
+}
+@keyframes gradient-flow { to { background-position: 200% 0; } }
+
+/* Floating shapes behind the hero text */
+.float {
+  position: absolute;
+  border: 2px solid rgba(167, 139, 250, 0.35);
+  animation: float 9s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+.float-1 { width: 90px;  height: 90px;  border-radius: 50%; top: 14%; right: 12%; }
+.float-2 { width: 60px;  height: 60px;  border-radius: 14px; bottom: 18%; right: 28%; border-color: rgba(96, 165, 250, 0.35); animation-delay: -3s; }
+.float-3 { width: 120px; height: 120px; border-radius: 50%; bottom: 10%; left: 6%; border-style: dashed; border-color: rgba(244, 114, 182, 0.4); animation-duration: 12s; animation-delay: -6s; }
+@keyframes float {
+  from { transform: translateY(0) rotate(0deg); }
+  to   { transform: translateY(-28px) rotate(30deg); }
+}
+
+/* Button shine sweep on hover */
+.btn { position: relative; overflow: hidden; }
+.btn::after {
+  content: "";
+  position: absolute;
+  top: 0; left: -80%;
+  width: 50%; height: 100%;
+  background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+  transform: skewX(-20deg);
+  transition: left 0.6s ease;
+}
+.btn:hover::after { left: 130%; }
+
+/* Gentle pulse on "Currently learning" badges */
+.badge-learning { animation: pulse 2.8s ease-in-out infinite; }
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(96, 165, 250, 0.35); }
+  50%      { box-shadow: 0 0 0 7px rgba(96, 165, 250, 0); }
+}
+
+/* Scroll progress bar and card reveals (modern browsers; others just skip them) */
+.scroll-progress { display: none; }
+
+@supports (animation-timeline: scroll()) {
+  .scroll-progress {
+    display: block;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 3px;
+    z-index: 300;
+    background: linear-gradient(90deg, var(--accent), var(--pink), var(--accent-2));
+    transform-origin: left;
+    animation: progress-grow linear both;
+    animation-timeline: scroll(root);
+  }
+  @keyframes progress-grow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+}
+
+@supports (animation-timeline: view()) {
+  .card {
+    animation: reveal linear backwards;
+    animation-timeline: view();
+    animation-range: entry 0% entry 35%;
+  }
+  @keyframes reveal {
+    from { opacity: 0; transform: translateY(40px) scale(0.97); }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-progress { display: none !important; }
+  .hero-hello { width: auto; border-right: 0; }
+}
+
+@media (max-width: 640px) {
+  .float-1 { width: 60px; height: 60px; right: 6%; }
+  .float-3 { width: 80px; height: 80px; }
+}
+.project .badge { align-self: flex-start; margin-bottom: var(--space-sm); }
+/* =========================================================
+   13. EVEN MORE ANIMATIONS (pure CSS)
+   ========================================================= */
+
+/* Navbar slides down when the page loads */
+.site-header { animation: slide-down 0.7s ease backwards; }
+@keyframes slide-down { from { transform: translateY(-100%); opacity: 0; } }
+
+/* Pulsing dot next to the logo */
+.logo::before {
+  content: "";
+  display: inline-block;
+  width: 8px; height: 8px;
+  margin-right: 0.55rem;
+  border-radius: 50%;
+  background: var(--accent);
+  animation: dot-pulse 2s ease-in-out infinite;
+}
+@keyframes dot-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(167, 139, 250, 0.6); }
+  50%      { box-shadow: 0 0 0 6px rgba(167, 139, 250, 0); }
+}
+
+/* Nav links: underline grows from the center on hover */
+.nav-links a { position: relative; }
+.nav-links a::after {
+  content: "";
+  position: absolute;
+  left: 0.9rem; right: 0.9rem; bottom: 0.2rem;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent), var(--pink), var(--accent-2));
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+.nav-links a:hover::after { transform: scaleX(1); }
+
+/* Bouncing arrow at the bottom of the hero */
+.hero::after {
+  content: "";
+  position: absolute;
+  bottom: 1.5rem; left: 50%;
+  width: 14px; height: 14px;
+  border-right: 2px solid var(--text-muted);
+  border-bottom: 2px solid var(--text-muted);
+  transform: translateX(-50%) rotate(45deg);
+  animation: scroll-cue 1.8s ease-in-out infinite;
+}
+@keyframes scroll-cue {
+  0%, 100% { transform: translate(-50%, 0) rotate(45deg); opacity: 0.4; }
+  50%      { transform: translate(-50%, 10px) rotate(45deg); opacity: 1; }
+}
+
+/* Section headings get a gradient bar that draws itself as you scroll */
+h2::after {
+  content: "";
+  display: block;
+  width: 56px; height: 4px;
+  margin-top: 0.6rem;
+  border-radius: 4px;
+  background: linear-gradient(90deg, var(--accent), var(--pink), var(--accent-2));
+}
+.contact h2::after { margin-inline: auto; }
+
+@supports (animation-timeline: view()) {
+  h2::after {
+    animation: bar-grow linear backwards;
+    animation-timeline: view();
+    animation-range: entry 0% entry 70%;
+  }
+  @keyframes bar-grow { from { width: 0; } }
+}
+
+/* Skill cards: badge wiggles on hover */
+.skill:hover .badge { animation: wiggle 0.5s ease; }
+@keyframes wiggle {
+  0%, 100% { transform: rotate(0); }
+  25%      { transform: rotate(-6deg); }
+  75%      { transform: rotate(6deg); }
+}
+
+/* Project cards: gradient line sweeps across the top, tags pop up */
+.project { position: relative; overflow: hidden; }
+.project::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 3px;
+  background: linear-gradient(90deg, var(--accent), var(--pink), var(--accent-2));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.5s ease;
+}
+.project:hover::before { transform: scaleX(1); }
+
+.project:hover .tags li { animation: tag-pop 0.4s ease backwards; }
+.project:hover .tags li:nth-child(2) { animation-delay: 0.08s; }
+.project:hover .tags li:nth-child(3) { animation-delay: 0.16s; }
+@keyframes tag-pop {
+  from { transform: translateY(8px) scale(0.9); opacity: 0.4; }
+}
+
+/* Education card: glowing accent edge */
+.education {
+  border-left: 4px solid var(--accent);
+  animation: edge-glow 3.5s ease-in-out infinite;
+}
+@keyframes edge-glow {
+  0%, 100% { box-shadow: var(--shadow), 0 0 0 0 rgba(167, 139, 250, 0); }
+  50%      { box-shadow: var(--shadow), 0 0 28px 2px rgba(167, 139, 250, 0.25); }
+}
+
+/* Contact buttons gently bob up and down, one after another */
+.contact-list li { animation: bob 3.5s ease-in-out infinite alternate; }
+.contact-list li:nth-child(2) { animation-delay: -0.8s; }
+.contact-list li:nth-child(3) { animation-delay: -1.6s; }
+.contact-list li:nth-child(4) { animation-delay: -2.4s; }
+@keyframes bob {
+  from { transform: translateY(0); }
+  to   { transform: translateY(-6px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero::after { display: none; }
+}
+/* =========================================================
+   14. EXTRA STYLING (looks, not motion)
+   ========================================================= */
+
+/* Text selection color */
+::selection { background: var(--accent); color: #06030d; }
+
+/* Slim, themed scrollbar */
+html { scrollbar-color: var(--accent) var(--bg); scrollbar-width: thin; }
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: #352a63; border-radius: 10px; border: 2px solid var(--bg); }
+::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
+/* Hero: faint dot grid that fades out toward the edges */
+.hero::before {
+  content: "";
+  position: absolute; inset: 0;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.12) 1px, transparent 1px);
+  background-size: 28px 28px;
+  -webkit-mask-image: radial-gradient(ellipse at center, #000 30%, transparent 75%);
+  mask-image: radial-gradient(ellipse at center, #000 30%, transparent 75%);
+  pointer-events: none;
+}
+
+/* Glass-style cards: soft sheen, inner highlight, glow on hover */
+.card {
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.01)), var(--surface);
+  box-shadow: var(--shadow), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+.card:hover {
+  box-shadow: var(--shadow), 0 0 32px rgba(167, 139, 250, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+/* Section dividers */
+.section-alt { border-block: 1px solid var(--border); }
+
+/* Skill cards: top stripe shows the level (solid = beginner, dashed = learning) */
+.skill:has(.badge-beginner) { border-top: 3px solid var(--accent); }
+.skill:has(.badge-learning) { border-top: 3px dashed var(--accent-2); }
+
+/* About card accent edge */
+.about-facts { border-top: 3px solid var(--accent); }
+
+/* Tags get a thin outline */
+.tags li { border: 1px solid rgba(167, 139, 250, 0.35); }
+
+/* Project links: arrow that nudges forward on hover */
+.project-links a::after {
+  content: "\2192";
+  display: inline-block;
+  margin-left: 0.35rem;
+  transition: transform 0.25s ease;
+}
+.project-links a:hover::after { transform: translateX(5px); }
+
+/* Contact section: soft glow rising from the bottom */
+#contact {
+  background: radial-gradient(ellipse at 50% 100%, rgba(167, 139, 250, 0.16), transparent 65%);
+}
+
+/* Footer: gradient divider line */
+.site-footer {
+  border-top: 1px solid;
+  border-image: linear-gradient(90deg, transparent, var(--accent), var(--pink), var(--accent-2), transparent) 1;
+}
+/* =========================================================
+   15. EVEN MORE ANIMATIONS, ROUND 3 (pure CSS)
+   ========================================================= */
+
+/* Hero subtitle: a light glint travels across the text */
+.hero-subtitle {
+  background-image: linear-gradient(100deg, var(--text) 40%, #c4b5fd 50%, var(--text) 60%);
+  background-size: 250% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: rise 0.8s ease both, glint 6s linear 1.2s infinite;
+}
+@keyframes glint {
+  from { background-position: 150% 0; }
+  to   { background-position: -100% 0; }
+}
+
+/* Main call-to-action buttons glow with a soft ring */
+.hero-buttons .btn-primary,
+.contact-list .btn-primary { animation: btn-glow 2.6s ease-in-out infinite; }
+.hero-buttons .btn-primary:hover,
+.contact-list .btn-primary:hover { animation: none; }
+@keyframes btn-glow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(167, 139, 250, 0.5); }
+  50%      { box-shadow: 0 0 0 10px rgba(167, 139, 250, 0); }
+}
+
+/* "Beginner" badges have a light shine passing over them */
+.badge-beginner {
+  background-image: linear-gradient(110deg, var(--accent) 40%, #ddd6fe 50%, var(--accent) 60%);
+  background-size: 250% 100%;
+  animation: badge-shine 4s linear infinite;
+}
+@keyframes badge-shine {
+  from { background-position: 150% 0; }
+  to   { background-position: -100% 0; }
+}
+
+/* Contact section: the bottom glow slowly sways */
+#contact {
+  background-size: 160% 160%;
+  background-position: 0% 100%;
+  animation: ambient 10s ease-in-out infinite alternate;
+}
+@keyframes ambient { to { background-position: 100% 100%; } }
+
+/* Scroll-driven effects (modern browsers only) */
+@supports (animation-timeline: view()) {
+
+  /* Hero text drifts up and fades as you scroll past it */
+  .hero-inner {
+    animation: hero-out linear both;
+    animation-timeline: view();
+    animation-range: exit 0% exit 70%;
+  }
+  @keyframes hero-out { to { opacity: 0; transform: translateY(-60px); } }
+
+  /* Skill cards slide in from alternating sides */
+  .skill:nth-child(odd)  { animation-name: reveal-left; }
+  .skill:nth-child(even) { animation-name: reveal-right; }
+  .project:nth-child(odd)  { animation-name: reveal-left; }
+  .project:nth-child(even) { animation-name: reveal-right; }
+  @keyframes reveal-left  { from { opacity: 0; transform: translateX(-60px); } }
+  @keyframes reveal-right { from { opacity: 0; transform: translateX(60px); } }
+
+  /* About paragraphs and the footer fade in softly */
+  .about-text p,
+  .site-footer p {
+    animation: reveal-soft linear backwards;
+    animation-timeline: view();
+    animation-range: entry 0% entry 60%;
+  }
+  @keyframes reveal-soft { from { opacity: 0; transform: translateY(20px); } }
+}
+/* =========================================================
+   16. HERO PHOTO
+   ========================================================= */
+.hero-inner {
+  display: grid;
+  grid-template-columns: 1.25fr 1fr;
+  gap: var(--space-lg);
+  align-items: center;
+}
+
+.hero-photo {
+  position: relative;
+  margin: 0;
+  justify-self: center;
+  width: min(100%, 380px);
+  animation: rise 0.9s ease 0.3s both, photo-float 7s ease-in-out 1.3s infinite alternate;
+}
+/* Soft glowing halo behind the photo */
+.hero-photo::before {
+  content: "";
+  position: absolute;
+  inset: -14px;
+  border-radius: 36px;
+  background: linear-gradient(135deg, var(--accent), var(--pink), var(--accent-2));
+  opacity: 0.5;
+  filter: blur(26px);
+  animation: halo 5s ease-in-out infinite alternate;
+}
+.hero-photo img {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  object-position: center top;
+  border-radius: 28px;
+  border: 2px solid rgba(255, 255, 255, 0.18);
+  background: #f4f4f6;
+  box-shadow: var(--shadow);
+}
+/* Glass label at the bottom of the photo */
+.photo-chip {
+  position: absolute;
+  left: 14px; right: 14px; bottom: 14px;
+  padding: 0.55rem 0.9rem;
+  text-align: center;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text);
+  background: rgba(6, 3, 13, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+}
+
+@keyframes photo-float { to { transform: translateY(-12px); } }
+@keyframes halo { to { opacity: 0.75; transform: scale(1.04); } }
+
+@media (max-width: 900px) {
+  .hero-inner { grid-template-columns: 1fr; gap: 2rem; }
+  .hero-photo { order: -1; width: min(72%, 300px); }
+}
